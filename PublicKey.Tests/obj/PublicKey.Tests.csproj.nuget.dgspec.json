@@ -1,0 +1,484 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\lda-PublicKey\\PublicKey.Tests\\PublicKey.Tests.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\lda-PublicKey\\PublicKey.Tests\\PublicKey.Tests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\lda-PublicKey\\PublicKey.Tests\\PublicKey.Tests.csproj",
+        "projectName": "PublicKey.Tests",
+        "projectPath": "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\lda-PublicKey\\PublicKey.Tests\\PublicKey.Tests.csproj",
+        "packagesPath": "C:\\Users\\rolarte\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\lda-PublicKey\\PublicKey.Tests\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\rolarte\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {
+              "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\lda-PublicKey\\PublicKey\\PublicKey.csproj": {
+                "projectPath": "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\lda-PublicKey\\PublicKey\\PublicKey.csproj"
+              },
+              "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\utils-Tets\\utils_Tets.csproj": {
+                "projectPath": "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\utils-Tets\\utils_Tets.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Amazon.Lambda.APIGatewayEvents": {
+              "target": "Package",
+              "version": "[2.4.0, )"
+            },
+            "Amazon.Lambda.Core": {
+              "target": "Package",
+              "version": "[2.1.0, )"
+            },
+            "Amazon.Lambda.TestUtilities": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[15.5.0, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.3.1, )"
+            },
+            "xunit.runner.visualstudio": {
+              "target": "Package",
+              "version": "[2.3.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.10, 3.1.10]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[3.1.20, 3.1.20]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[3.1.0, 3.1.0]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[3.1.0, 3.1.0]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\lda-PublicKey\\PublicKey\\PublicKey.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\lda-PublicKey\\PublicKey\\PublicKey.csproj",
+        "projectName": "PublicKey",
+        "projectPath": "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\lda-PublicKey\\PublicKey\\PublicKey.csproj",
+        "packagesPath": "C:\\Users\\rolarte\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\lda-PublicKey\\PublicKey\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\rolarte\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {
+              "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\utils-AwsInstances\\utils_AwsInstances.csproj": {
+                "projectPath": "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\utils-AwsInstances\\utils_AwsInstances.csproj"
+              },
+              "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\utils-Common\\utils_Common.csproj": {
+                "projectPath": "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\utils-Common\\utils_Common.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Amazon.Lambda.AspNetCoreServer": {
+              "target": "Package",
+              "version": "[6.1.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.10, 3.1.10]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[3.1.20, 3.1.20]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[3.1.0, 3.1.0]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[3.1.0, 3.1.0]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\utils-AwsInstances\\utils_AwsInstances.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\utils-AwsInstances\\utils_AwsInstances.csproj",
+        "projectName": "utils_AwsInstances",
+        "projectPath": "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\utils-AwsInstances\\utils_AwsInstances.csproj",
+        "packagesPath": "C:\\Users\\rolarte\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\utils-AwsInstances\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\rolarte\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {
+              "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\utils-Common\\utils_Common.csproj": {
+                "projectPath": "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\utils-Common\\utils_Common.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "AWSSDK.CognitoIdentityProvider": {
+              "target": "Package",
+              "version": "[3.7.1.73, )"
+            },
+            "AWSSDK.DynamoDBv2": {
+              "target": "Package",
+              "version": "[3.7.0.102, )"
+            },
+            "AWSSDK.Extensions.NETCore.Setup": {
+              "target": "Package",
+              "version": "[3.7.1, )"
+            },
+            "AWSSDK.SecretsManager": {
+              "target": "Package",
+              "version": "[3.7.1.54, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.10, 3.1.10]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[3.1.0, 3.1.0]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[3.1.0, 3.1.0]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\utils-Common\\utils_Common.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\utils-Common\\utils_Common.csproj",
+        "projectName": "utils_Common",
+        "projectPath": "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\utils-Common\\utils_Common.csproj",
+        "packagesPath": "C:\\Users\\rolarte\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\utils-Common\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\rolarte\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "AWSSDK.CloudWatchLogs": {
+              "target": "Package",
+              "version": "[3.7.1.78, )"
+            },
+            "AWSSDK.DynamoDBv2": {
+              "target": "Package",
+              "version": "[3.7.0.102, )"
+            },
+            "AWSSDK.EventBridge": {
+              "target": "Package",
+              "version": "[3.7.4.46, )"
+            },
+            "AWSXRayRecorder.Handlers.AspNetCore": {
+              "target": "Package",
+              "version": "[2.7.3, )"
+            },
+            "Amazon.Lambda.APIGatewayEvents": {
+              "target": "Package",
+              "version": "[2.4.0, )"
+            },
+            "Amazon.Lambda.AspNetCoreServer": {
+              "target": "Package",
+              "version": "[6.1.0, )"
+            },
+            "Microsoft.AspNetCore.Http.Abstractions": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Serilog": {
+              "target": "Package",
+              "version": "[2.10.0, )"
+            },
+            "Serilog.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[4.2.0, )"
+            },
+            "Serilog.Formatting.Compact": {
+              "target": "Package",
+              "version": "[1.1.0, )"
+            },
+            "Serilog.Sinks.Console": {
+              "target": "Package",
+              "version": "[4.0.1, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.2.3, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.14.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.10, 3.1.10]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[3.1.0, 3.1.0]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[3.1.0, 3.1.0]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\utils-Tets\\utils_Tets.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\utils-Tets\\utils_Tets.csproj",
+        "projectName": "utils_Tets",
+        "projectPath": "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\utils-Tets\\utils_Tets.csproj",
+        "packagesPath": "C:\\Users\\rolarte\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\rolarte\\Documents\\Dann Regional\\Repos\\CL00002-AplicacionDigitalEmpresas-Backend-ePrepaid\\utils-Tets\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\rolarte\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "AWSXRayRecorder.Core": {
+              "target": "Package",
+              "version": "[2.10.1, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.16.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.10, 3.1.10]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[3.1.0, 3.1.0]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[3.1.0, 3.1.0]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,533 @@
+# Name: '${ProjectCode}-${ProjectName}-${ComponentName}-${Environment}-Stack'
+# Name: 'CL00001-Onboarding-Apps-DEV-Stack'
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'ePrepaid'
+
+
+
+########################################
+############## Parameters ##############
+########################################
+Parameters:
+  ############## General TAGs ##############
+  ProjectCode:
+    Type: String
+    Description: 'Codigo del proyecto'
+    AllowedPattern: '^[A-Z0-9]*$'
+    Default: CL00002
+  ProjectName:
+    Type: String
+    Description: 'Nombre del proyecto'
+    AllowedPattern: '^[a-zA-Z0-9-]*$'
+    Default: eprepaidpk
+  Environment:
+    Type: String
+    Description: 'Ambiente'
+    AllowedValues:
+      - POC
+      - DEV
+      - QA
+      - STG
+      - PDN
+      - DR
+    Default: DEV
+
+  ############## Domain ##############
+  DomainName:
+    Type: String
+    Description: 'Dominio completo. Ej: www.irsbnk.co ó www.{env}.irsbnk.co'
+    AllowedPattern: '^[a-z0-9-.]*$'
+    Default: www.dev.irsbnk.co
+
+  ApiDomainName:
+    Type: String
+    Description: 'Dominio completo. Ej: irsbnk.co ó {env}.irsbnk.co'
+    AllowedPattern: '^[a-z0-9-.]*$'
+    Default: api.dev.irsbnk.co
+
+
+  ############## General Params ##############
+  AccessControlAllowOrigin:
+    Type: String
+    Description: 'Dominio permitido por CORS. "*" no es recomendado'
+    AllowedPattern: '^[a-z0-9-.*]*$'
+    Default: '*'
+
+
+  ############## API Gateway ##############
+  ApiBasePath:
+    Type: String
+    Description: 'Path base. Ej: onboarding'
+    AllowedPattern: '^[a-z0-9-]*$'
+    Default: eprepaidpk
+
+  ApiStageName:
+    Type: String
+    Description: 'Nombre del stage del API.'
+    AllowedPattern: '^[a-z0-9-]*$'
+    Default: v0
+
+
+  SecretName:
+    Type: String
+    Description: "Secret name"
+    Default: arn:aws:secretsmanager:us-east-1:477672527642:secret:CL00002-eprepaid-verestro-DEV-Secrets-CgOEWO
+
+
+########################################
+############## Globals ###############
+########################################
+Globals:
+  Function:
+    MemorySize: 512
+    Timeout: 15
+    Tracing: Active
+    Runtime: dotnetcore3.1
+    Handler: PublicKey::lda_PublicKey.LambdaEntryPoint::FunctionHandlerAsync
+    AutoPublishAlias: live
+
+    Tags:
+      fdr:general:project-code: !Ref ProjectCode
+      fdr:general:project-name: !Ref ProjectName
+      fdr:general:environment: !Ref Environment
+
+########################################
+############## Resources ###############
+########################################
+
+
+Resources:
+  ############## Cognito ##############
+  # ResourceServer:
+  #   Type: AWS::Cognito::UserPoolResourceServer
+  #   Properties:
+  #     Identifier: 'verestro'
+  #     Name:
+  #       Fn::Sub: '${ProjectCode}-${ProjectName}-${Environment}-UsrPoolResServer'
+  #     Scopes:
+  #       - ScopeName: "public"
+  #         ScopeDescription: "Permiso sobre los servicios que consume Verestro"
+  #     UserPoolId: "us-east-1_gjXunkPM3"
+
+  # UserPoolTokenClient:
+  #   DependsOn: ResourceServer
+  #   Type: AWS::Cognito::UserPoolClient
+  #   Properties:
+  #     ClientName:
+  #       Fn::Sub: '${ProjectCode}-${ProjectName}-${Environment}-UsrPoolClient'
+  #     UserPoolId: "us-east-1_gjXunkPM3"
+  #     AllowedOAuthFlows:
+  #       - client_credentials
+  #     AllowedOAuthFlowsUserPoolClient: true
+  #     AllowedOAuthScopes:
+  #       - Fn::Join:
+  #           - '/'
+  #           - - Ref: ResourceServer
+  #             - public
+  #     SupportedIdentityProviders:
+  #       - COGNITO
+  #     GenerateSecret: true
+
+ 
+  ############## API Gateway ##############
+
+
+  ApiGatewayRestApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name:
+        Fn::Sub: '${ProjectCode}-${ProjectName}-${Environment}-Api'
+      StageName: !Ref ApiStageName
+      EndpointConfiguration:
+        Type: REGIONAL
+      TracingEnabled: true
+      # AccessLogSetting:
+      #   DestinationArn: !GetAtt ApiGatewayRestApiLogGroup.Arn
+      MethodSettings:
+        - DataTraceEnabled: true
+          HttpMethod: '*'
+          LoggingLevel: ERROR
+          MetricsEnabled: true
+          ResourcePath: '/*'
+
+      Cors:
+        AllowMethods: "'GET, OPTIONS, POST, PUT'"
+        AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,Session-Tracking,Request-Tracking'"
+        AllowOrigin: !Sub "'*'"
+
+      BinaryMediaTypes:
+        - multipart/form-data
+      GatewayResponses:
+        DEFAULT_4xx:
+          ResponseParameters:
+            Headers:
+              Access-Control-Allow-Origin: !Sub "'${AccessControlAllowOrigin}'"
+        DEFAULT_5XX:
+          ResponseParameters:
+            Headers:
+              Access-Control-Allow-Origin: !Sub "'${AccessControlAllowOrigin}'"
+        ACCESS_DENIED:
+          StatusCode: '403'
+          ResponseParameters:
+            Headers:
+              Access-Control-Allow-Origin: !Sub "'${AccessControlAllowOrigin}'"
+          ResponseTemplates:
+            application/json: '
+              {
+                "id": "$context.requestId",
+                "code": "ER00127",
+                "title": $context.error.messageString,
+                "detail": "$context.error.validationErrorString"
+              }'
+        BAD_REQUEST_PARAMETERS:
+          StatusCode: '400'
+          ResponseParameters:
+            Headers:
+              Access-Control-Allow-Origin: !Sub "'${AccessControlAllowOrigin}'"
+          ResponseTemplates:
+            application/json: '
+              {
+                "id": "$context.requestId",
+                "code": "ER00128",
+                "title": $context.error.messageString,
+                "detail": "$context.error.validationErrorString"
+              }'
+        BAD_REQUEST_BODY:
+          StatusCode: '400'
+          ResponseParameters:
+            Headers:
+              Access-Control-Allow-Origin: !Sub "'${AccessControlAllowOrigin}'"
+          ResponseTemplates:
+            application/json: '
+              {
+                "id": "$context.requestId",
+                "code": "ER00001",
+                "title": $context.error.messageString,
+                "detail": "$context.error.validationErrorString"
+              }'
+        EXPIRED_TOKEN:
+          StatusCode: '403'
+          ResponseParameters:
+            Headers:
+              Access-Control-Allow-Origin: !Sub "'${AccessControlAllowOrigin}'"
+          ResponseTemplates:
+            application/json: '
+              {
+                "id": "$context.requestId",
+                "code": "ER00129",
+                "title": $context.error.messageString,
+                "detail": "$context.error.validationErrorString"
+              }'
+        INTEGRATION_FAILURE:
+          StatusCode: '504'
+          ResponseParameters:
+            Headers:
+              Access-Control-Allow-Origin: !Sub "'${AccessControlAllowOrigin}'"
+          ResponseTemplates:
+            application/json: '
+              {
+                "id": "$context.requestId",
+                "code": "ER00130",
+                "title": $context.error.messageString,
+                "detail": "$context.error.validationErrorString"
+              }'
+        INTEGRATION_TIMEOUT:
+          StatusCode: '504'
+          ResponseParameters:
+            Headers:
+              Access-Control-Allow-Origin: !Sub "'${AccessControlAllowOrigin}'"
+          ResponseTemplates:
+            application/json: '
+              {
+                "id": "$context.requestId",
+                "code": "ER00131",
+                "title": $context.error.messageString,
+                "detail": "$context.error.validationErrorString"
+              }'
+        RESOURCE_NOT_FOUND:
+          StatusCode: '404'
+          ResponseParameters:
+            Headers:
+              Access-Control-Allow-Origin: !Sub "'${AccessControlAllowOrigin}'"
+          ResponseTemplates:
+            application/json: '
+              {
+                "id": "$context.requestId",
+                "code": "ER00132",
+                "title": $context.error.messageString,
+                "detail": "$context.error.validationErrorString"
+              }'
+        UNAUTHORIZED:
+          StatusCode: '401'
+          ResponseParameters:
+            Headers:
+              Access-Control-Allow-Origin: !Sub "'${AccessControlAllowOrigin}'"
+          ResponseTemplates:
+            application/json: '
+              {
+                "id": "$context.requestId",
+                "code": "ER00133",
+                "title": $context.error.messageString,
+                "detail": "$context.error.validationErrorString"
+              }'
+      DefinitionBody:
+        openapi: "3.0.1"
+        x-amazon-apigateway-request-validators:
+          RequestValidator:
+            validateRequestParameters: true
+            validateRequestBody: true
+        paths:
+          /api/auth:
+            get:
+              x-amazon-apigateway-request-validator: RequestValidator
+              x-amazon-apigateway-integration:
+                type: "aws_proxy"
+                uri:
+                  Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ApiFunctionGetPublicKey.Arn}:live/invocations"
+                passthroughBehavior: "when_no_match"
+                httpMethod: "POST"
+              tags:
+                - 'PublicKey'
+              summary: 'Get jwt public key'
+              description: 'Get Public Key'
+              security:
+                - api_key: []
+
+              parameters:
+                - in: header
+                  name: Authorization
+                  schema:
+                    type: string
+                    pattern: '^[a-zA-Z0-9-_]*$'
+                    minLength: 10
+                    maxLength: 3000
+                    example: 'Bearer ey234nadjyh4'
+                  description: 'Token de autorización del consumidor'
+                  required: true
+                - in: header
+                  name: X-API-Key
+                  schema:
+                    type: string
+                    pattern: '^[a-zA-Z0-9-_]*$'
+                    minLength: 1
+                    maxLength: 80
+                    example: 'dFr5D3lop123Dd4fGr3fFsGt3s'
+                  description: 'API Key del consumidor'
+                  required: true
+                - in: header
+                  name: Session-Tracking
+                  schema:
+                    type: string
+                    format: uuid
+                    minLength: 36
+                    maxLength: 36
+                    example: 'e723398c-3200-4c65-bc96-93eec0e95182'
+                  description: 'UUID para trazabilidad de logs asociados a la sesión. Debe ser proporcionado por el consumidor final (no capas intermedias). Debe el mismo durante la sesión.'
+                  required: true
+                - in: header
+                  name: Request-Tracking
+                  schema:
+                    type: string
+                    format: uuid
+                    minLength: 36
+                    maxLength: 36
+                    example: 'a2f1a635-67fe-4086-a026-df46c45088f1'
+                  description: 'UUID para trazabilidad de logs asociados a la petición. Debe ser proporcionado por el consumidor final (no capas intermedias). Debe ser diferente por cada peticiónn que se haga al API.'
+                  required: true
+              responses:
+                "200":
+                  description: "200 response"
+                  content: {}
+
+          /api/auth/{proxy+}:
+            x-amazon-apigateway-request-validator: RequestValidator
+            x-amazon-apigateway-any-method:
+              responses:
+                "200":
+                  description: "200 response"
+                  content: {}
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: 
+                  Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ApiFunctionGetPublicKey.Arn}:live/invocations"
+              security:
+                - api_key: []
+
+          /{proxy+}:
+            x-amazon-apigateway-request-validator: RequestValidator
+            x-amazon-apigateway-any-method:
+              responses:
+                "200":
+                  description: "200 response"
+                  content: {}
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: 
+                  Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ApiFunctionGetPublicKey.Arn}:live/invocations"
+              security:
+                - api_key: []
+
+        components:
+          securitySchemes:
+            # api_key:
+            #   in: header
+            #   type: apiKey
+            #   name: x-api-key
+            CognitoAuth:
+              type: apiKey
+              name: Authorization
+              in: header
+              x-amazon-apigateway-authtype: cognito_user_pools
+              x-amazon-apigateway-authorizer:
+                type: cognito_user_pools
+                providerARNs:
+                  - "arn:aws:cognito-idp:us-east-1:477672527642:userpool/us-east-1_gjXunkPM3"
+      Tags:
+        fdr:general:project-code: !Ref ProjectCode
+        fdr:general:project-name: !Ref ProjectName
+        fdr:general:environment: !Ref Environment
+        
+ 
+
+  ApiUsagePlan:
+    Type: AWS::ApiGateway::UsagePlan
+    DependsOn:
+      # - ApiGatewayRestApi.Stage
+      - ApiGatewayRestApiStage
+    Properties:
+      UsagePlanName:
+        Fn::Sub: '${ProjectCode}-${ProjectName}-${Environment}-ApiPlan'
+      Description: 'Plan de uso para Verestro'
+      ApiStages:
+        - ApiId: !Ref ApiGatewayRestApi
+          Stage: !Ref ApiStageName
+
+  ApiKey:
+    Type: AWS::ApiGateway::ApiKey
+    Properties:
+      Name:
+        Fn::Sub: '${ProjectCode}-${ProjectName}-${Environment}-ApiKey'
+      Description: 'API Key para Verestro'
+      Enabled: true
+      Tags:
+        - Key: fdr:general:project-code
+          Value: !Ref ProjectCode
+        - Key: fdr:general:project-name
+          Value: !Ref ProjectName
+        - Key: fdr:general:environment
+          Value: !Ref Environment
+
+  LinkApiKeyToUsagePlan:
+    Type: AWS::ApiGateway::UsagePlanKey
+    Properties:
+      KeyId: !Ref ApiKey
+      KeyType: API_KEY
+      UsagePlanId: !Ref ApiUsagePlan
+
+  # UsersPublicApiGatewayMapping:
+  #   Type: AWS::ApiGateway::BasePathMapping
+  #   Properties:
+ 
+  #     DomainName: !Ref ApiDomainName
+  #     RestApiId: !Ref ApiGatewayRestApi
+  #     BasePath: !Ref ApiBasePath
+
+  ApiGatewayMapping:
+    Type: AWS::ApiGateway::BasePathMapping
+    Properties:
+      DomainName: !Ref ApiDomainName
+      RestApiId: !Ref ApiGatewayRestApi
+      BasePath: !Ref ApiBasePath
+      Stage: !Ref ApiGatewayRestApi.Stage
+      
+
+  ############## Lambdas ##############
+
+  ApiFunctionGetPublicKey:
+    Type: AWS::Serverless::Function
+    Properties:
+      Timeout: 30
+      FunctionName:
+        Fn::Sub: '${ProjectCode}-${ProjectName}-GetPublicKey-${Environment}-Lambda'
+      Description: 'Lambda que expone API mediante API Gateway'
+      Environment:
+        Variables:
+          AWS_SecretName: !Ref SecretName
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ApiGatewayRestApi
+            Path: /auth
+            Method: GET
+        ProxyApiGreedy:
+            Type: Api
+            Properties:
+                RestApiId: !Ref ApiGatewayRestApi
+                Path: /auth/{proxy+}
+                Method: ANY   
+      CodeUri: ../PublicKey
+      Policies:
+        - Statement:
+          - Sid: SSMDescribeParametersPolicy
+            Effect: Allow
+            Action:
+            - ssm:DescribeParameters
+            Resource: '*'
+          - Sid: SSMGetParameterPolicy
+            Effect: Allow
+            Action:
+            - ssm:GetParameters
+            - ssm:GetParameter
+            Resource: '*'
+          - Sid: AWSSecretsManagerGetSecretValuePolicy
+            Effect: Allow
+            Action:
+            - secretsmanager:GetSecretValue
+            Resource: '*'
+     
+
+  ApiFunctionGetPublicKeyPermission:
+    Type: AWS::Lambda::Permission
+    DependsOn:
+      - ApiFunctionGetPublicKey
+      - ApiGatewayRestApi
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref ApiFunctionGetPublicKey
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ApiGatewayRestApi}/${ApiStageName}/*/*'
+
+
+
+
+
+########################################
+############### Outputs ################
+########################################
+Outputs:
+ 
+
+  ############## API Gateway ##############
+  ApiGatewayRestApiURL:
+    Description: 'URL del API Gateway'
+    Value: !Sub 'https://${ApiGatewayRestApi}.execute-api.${AWS::Region}.amazonaws.com/${ApiStageName}'
+
+  PublicRestApiURL:
+    Description: 'URL del API Gateway'
+    Value: !Sub 'https://${ApiDomainName}/${ApiBasePath}/${ApiStageName}'
+
+  ############## Lambda ##############
+ 
+  ApiFunctionGetSummaryRequest:
+    Description: 'ARN de la lambda ApiFunctionGetPublicKey'
+    Value: !Ref ApiFunctionGetPublicKey
+
+  
+  ############## Cognito ##############
+  GeneralPublicApiAuthorizerUrl:
+    Value: "us-east-1_h4zo5MSNb"
+
