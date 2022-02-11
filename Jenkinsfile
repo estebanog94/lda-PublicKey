@@ -1,21 +1,10 @@
-      pipeline {
-        agent none
-        stages {
-          stage("build & SonarQube analysis") {
-            agent any
+pipeline {
+    agent any 
+    stages {
+        stage('Stage 1') {
             steps {
-              withSonarQubeEnv('My SonarQube Server') {
-                sh 'mvn clean package sonar:sonar'
-              }
+                echo 'Hello world!' 
             }
-          }
-          stage("Quality Gate") {
-            steps {
-              timeout(time: 1, unit: 'HOURS') {
-                waitForQualityGate abortPipeline: true
-              }
-            }
-          }
         }
-      }
-      
+    }
+}
